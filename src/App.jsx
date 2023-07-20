@@ -1,4 +1,5 @@
-import { useState } from 'react';
+
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './index.css';
 import NavBar from './components/layout/NavBar';
@@ -12,6 +13,7 @@ function App() {
     <Router>
       <div className="flex flex-col justify-between h-screen">
         <NavBar title={'Github Search'} />
+        
         <main className="container mx-auto px-3 pb-12">
           <Routes>
             <Route path="/" element={<Home />}></Route>
