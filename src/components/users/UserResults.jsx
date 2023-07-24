@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import Spinner from '../layout/spinner';
 import UserItem from './userItem';
 import GithubContext from '../../context/github/GithubContext';
@@ -7,12 +7,9 @@ import GithubContext from '../../context/github/GithubContext';
 
 const UserResults = () => {
   
-const {users, loading, fetchUsers} = useContext(GithubContext)
+const {users, loading, } = useContext(GithubContext)
   
-  {/*<--fetchUsers is being called from GithubContext once this component loads-->*/}
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+
 
 
 

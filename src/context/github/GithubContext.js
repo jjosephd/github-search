@@ -16,8 +16,8 @@
  * Github context created to provide variables for UserResults
  */
 
-import { createContext, useState } from 'react';
-
+import { createContext, useReducer } from 'react';
+import githubReducer from './GithubReducer';
 const GithubContext = createContext();
 
 /**
@@ -32,14 +32,23 @@ const GITHUB_TOKEN = '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';
  */
 
 export const GithubProvider = ({ children }) => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  {
+    /* For reducer: setting initial state to an object with an empty array (users) and true (loading).
+    InitialState is replacing state with this object */
+  }
+  const intialState = {
+    users: [],
+    loading: false,
+  };
+
+  const [state, dispatch] = useReducer(githubReducer, intialState);
 
   {
     /* fetchUsers is an async function that awaits for fetching of Github API user endpoint */
   }
 
   const fetchUsers = async () => {
+    setLoading();
     const response = await fetch(`${GITHUB_URL}/users`, {
       headers: {
         Authorization: `token ${GITHUB_TOKEN}`,
@@ -48,12 +57,25 @@ export const GithubProvider = ({ children }) => {
 
     const data = await response.json();
 
-    setUsers(data);
-    setLoading(false);
+    {
+      /*dispatch type GET USERS and data is sent as a payload */
+    }
+    dispatch({
+      type: 'GET_USERS',
+      payload: data,
+    });
+  };
+
+  const setLoading = () => {
+    dispatch({
+      type: 'SET_LOADING',
+    });
   };
 
   return (
-    <GithubContext.Provider value={{ users, loading, fetchUsers }}>
+    <GithubContext.Provider
+      value={{ users: state.users, loading: state.loading, fetchUsers }}
+    >
       {children}
     </GithubContext.Provider>
   );
