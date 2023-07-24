@@ -44,7 +44,7 @@ export const GithubProvider = ({ children }) => {
   const [state, dispatch] = useReducer(githubReducer, intialState);
 
   {
-    /* fetchUsers is an async function that awaits for fetching of Github API user endpoint */
+    /* fetchUsers is an async function that awaits for fetching of Github API user endpoint  Test results of fetch hook*/
   }
 
   const fetchUsers = async () => {
