@@ -25,7 +25,7 @@ const GithubContext = createContext();
  */
 
 const GITHUB_URL = 'https://api.github.com';
-const GITHUB_TOKEN = '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';
+const GITHUB_TOKEN = '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';
 
 /***
  * Github Provider that takes children (React Nodes) as props
@@ -38,6 +38,7 @@ export const GithubProvider = ({ children }) => {
   }
   const intialState = {
     users: [],
+    user: {},
     loading: false,
   };
 
@@ -73,6 +74,32 @@ export const GithubProvider = ({ children }) => {
     });
   };
 
+  const getUser = async (login) => {
+    setLoading();
+
+    //params takes new URL search param with query being text state
+
+    const response = await fetch(`${GITHUB_URL}/users/${login}`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+      },
+    });
+
+    if (response.status === 404) {
+      window.location = '/notfound';
+    } else {
+      const result = await response.json();
+
+      {
+        /*dispatch type GET USERS and data is sent as a payload */
+      }
+      dispatch({
+        type: 'GET_USER',
+        payload: result,
+      });
+    }
+  };
+
   const setLoading = () => {
     dispatch({
       type: 'SET_LOADING',
@@ -93,8 +120,10 @@ export const GithubProvider = ({ children }) => {
       value={{
         users: state.users,
         loading: state.loading,
+        user: state.user,
         searchUsers,
         clearUsers,
+        getUser,
       }}
     >
       {children}

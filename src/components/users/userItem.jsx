@@ -33,7 +33,7 @@ const UserItem = ({user: {login, avatar_url}}) => {
           color: 'white'}}>
             {login}
           </Typography>
-          <Link className='text-base-content text-opacity-40' to={`/users/${login}`}>
+          <Link className='text-base-content text-opacity-40' to={`/user/${login}`}>
             View Profile
           </Link>
           </Container>
