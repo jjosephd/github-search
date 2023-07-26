@@ -12,29 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const githubReducer = (state, action) => {
+const alertReducer = (state, action) => {
   switch (action.type) {
-    //GET_USERS is being dispatched from context and is the condition for action type
-    case 'GET_USERS':
-      return {
-        //spread all the properties from the previous state into a new object literal, then overwrite the property that you want to update.
-        ...state,
-        users: action.payload,
-        loading: false,
-      };
-    case 'SET_LOADING':
-      return {
-        ...state,
-        loading: true,
-      };
-    case 'CLEAR_USERS':
-      return {
-        ...state,
-        users: [],
-      };
+    case 'NEW_ALERT':
+      return action.payload;
+    case 'REMOVE_ALERT':
+      return null;
     default:
       return state;
   }
 };
-
-export default githubReducer;
+export default alertReducer;

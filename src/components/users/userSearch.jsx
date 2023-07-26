@@ -13,11 +13,13 @@
 // limitations under the License.
 import { useState,useContext } from "react"
 import GithubContext from "../../context/github/GithubContext"
+import AlertContext from "../../context/alert/AlertContext"
 
 const UserSearch = () => {
   const [text, setText] = useState('')
 
-  const {users} = useContext(GithubContext)
+  const { users, searchUsers, clearUsers } = useContext(GithubContext)
+  const {newAlert} = useContext(AlertContext)
 
   const handleChange = (e) => setText(e.target.value)
   
@@ -25,11 +27,15 @@ const UserSearch = () => {
     e.preventDefault()
     
     if (text === '') {
-      alert('Please enter text')
+      newAlert('Please enter text', 'error')
     } else {
-      //@todo - search users
+      //Call searchUsers from context and pass text state hook
+      searchUsers(text)
       setText('')
     }
+  }
+  const handleClear = (e) => {
+    clearUsers(users)
   }
 
   return (
@@ -52,7 +58,9 @@ const UserSearch = () => {
       </div>
         {/*Display only if items in users state */}
       {users.length > 0 && (<div>
-        <button className="btn btn-ghost btn-lg">Clear</button>
+        <button
+          className="btn btn-ghost btn-lg"
+        onClick={handleClear}>Clear</button>
       </div>)}
         
     </div>
