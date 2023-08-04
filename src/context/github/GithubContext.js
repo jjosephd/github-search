@@ -25,7 +25,7 @@ const GithubContext = createContext();
  */
 
 const GITHUB_URL = 'https://api.github.com';
-const GITHUB_TOKEN = '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';
+const GITHUB_TOKEN = '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';
 
 /***
  * Github Provider that takes children (React Nodes) as props
