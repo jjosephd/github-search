@@ -26,6 +26,7 @@ const GithubContext = createContext();
 
 const GITHUB_URL = 'https://api.github.com';
 const GITHUB_TOKEN = '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';
+const REPO_TOKEN = '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';
 
 /***
  * Github Provider that takes children (React Nodes) as props
@@ -40,6 +41,7 @@ export const GithubProvider = ({ children }) => {
     users: [],
     user: {},
     loading: false,
+    repos: [],
   };
 
   const [state, dispatch] = useReducer(githubReducer, intialState);
@@ -100,6 +102,34 @@ export const GithubProvider = ({ children }) => {
     }
   };
 
+  const getUserRepos = async (login) => {
+    setLoading();
+
+    const params = new URLSearchParams({
+      sort: 'created',
+      per_page: 7,
+    });
+
+    const response = await fetch(
+      `${GITHUB_URL}/users/${login}/repos?${params}`,
+      {
+        headers: {
+          Authorization: `token ${REPO_TOKEN}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    {
+      /*dispatch type GET USERS and data is sent as a payload */
+    }
+    dispatch({
+      type: 'GET_REPOS',
+      payload: data,
+    });
+  };
+
   const setLoading = () => {
     dispatch({
       type: 'SET_LOADING',
@@ -121,9 +151,11 @@ export const GithubProvider = ({ children }) => {
         users: state.users,
         loading: state.loading,
         user: state.user,
+        repos: state.repos,
         searchUsers,
         clearUsers,
         getUser,
+        getUserRepos,
       }}
     >
       {children}
