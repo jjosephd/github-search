@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as React from 'react'
 import PropTypes from 'prop-types'
 import { FaEye, FaInfo, FaLink, FaStar, } from 'react-icons/fa'
 import { BsFillGearFill } from 'react-icons/bs'
@@ -23,7 +22,6 @@ const RepoItem = ({ repo }) => {
   const {
     name,
     description,
-    html_url,
     forks,
     open_issues,
     watchers_count,
